@@ -40,9 +40,23 @@ public final class Tag {
     public static final class DAO {
 
         public static Set<Tag> ofProduct(Connection connection, int productId) {
-            // Iterating through a resultSet:
-            // https://docs.oracle.com/javase/tutorial/jdbc/basics/retrieving.html
-            throw new UnsupportedOperationException("unimplemented");
+            var tags = new HashSet<Tag>();
+            
+            try (
+                var statement = DAOUtils.prepare(connection, Queries.TAGS_FOR_PRODUCT, productId);
+                var resultSet = statement.executeQuery();
+            ) {
+
+                while (resultSet.next()) {
+                    var name = resultSet.getString("tag_name");
+                    var tag = new Tag(name);
+                    tags.add(tag);
+                }
+
+            } catch (Exception e) {
+                throw new DAOException(e);
+            }
+            return tags;
         }
     }
 }

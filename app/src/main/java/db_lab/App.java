@@ -12,7 +12,7 @@ public final class App {
         // all methods, you can pass the controller a mocked model instead:
         //
         // var model = Model.mock();
-        var connection = DAOUtils.localMySQLConnection("tessiland", "root", "");
+        var connection = DAOUtils.localMySQLConnection("tessiland", "root", "Sqlmaster123.");
         var model = Model.fromConnection(connection);
         var view = new View(() -> {
             // We want to make sure we close the connection when we're done
